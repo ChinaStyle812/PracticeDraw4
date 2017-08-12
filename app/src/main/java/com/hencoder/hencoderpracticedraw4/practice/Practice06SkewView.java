@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ public class Practice06SkewView extends View {
     }
 
     {
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.maps);
     }
 
@@ -38,7 +40,16 @@ public class Practice06SkewView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.save();
+        canvas.skew(0, 0.5f);
         canvas.drawBitmap(bitmap, point1.x, point1.y, paint);
+        canvas.restore();
+
+        canvas.save();
+        paint.setShadowLayer(10, 10, 10, Color.GRAY);
+        canvas.skew(-0.5f, 0);
         canvas.drawBitmap(bitmap, point2.x, point2.y, paint);
+        paint.clearShadowLayer();
+        canvas.restore();
     }
 }
